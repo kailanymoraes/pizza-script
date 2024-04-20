@@ -1,13 +1,13 @@
 let modalQtd;
 
+
+//--------------------------EXIBE INFORMAÇÕES DAS PIZZAS-----------------------------
+
 pizzaJson.map((item,index)=>{
 
     //clonando o pizza-item
 
     let pizzaItem = document.querySelector('.models .pizza-item').cloneNode(true);
-
-    //appent = cria um elemento dentro do local especificado sempre na ultima posição, ou seja, não substitui os elementos que já estavam dentro
-    document.querySelector('.pizza-area').append(pizzaItem);
 
     //definindo um atributo chamado data-key ao elemento .pizza-item contendo o id da pizza que foi selecionada pelo usuário
     pizzaItem.setAttribute('data-key', index);
@@ -61,4 +61,41 @@ pizzaJson.map((item,index)=>{
 
     });
 
+        //appent = cria um elemento dentro do local especificado sempre na ultima posição, ou seja, não substitui os elementos que já estavam dentro
+        document.querySelector('.pizza-area').append(pizzaItem);
+
 })
+
+//evento do modal
+function closeModal(){
+    document.querySelector('.pizzaWindowArea').style.opacity = 0;
+
+    setTimeout(() =>{
+        document.querySelector.querySelector('.pizzaWindowArea').style.display = 'none';
+    }, 500)
+}
+
+//estamos usando o foreach para que automaticmanete ele selecione cada um do selementos com as classes abaixo e adicone um eventlistener nesses elementos, a cada vez que o usuario clicar em algum botão de fechar ele irá detectar o clique e irá chamar a funçao closemoal para fechar a janela
+document.querySelectorAll('.pizzaInfo--cancelButton, .pizzaInfo--cancelMobileButton').forEach((item)=>{
+    item.addEventListener('click',closeModal);
+});
+
+document.querySelector('.pizzaInfo--qtmais').addEventListener('click',()=>{
+    //a cada vez que o usuario clicar no modal a variavel modalQtd será incrementada em +1
+    modalQtd++;
+
+    //selecionando o elemento onde a quantidade de pizzas irá aparecer e utilizando-o conforme a variável modalQtd
+    document.querySelector('.pizzaInfo--qt').innerHTML = modalQtd;
+});
+
+document.querySelector('.pizzaInfo--qtmenos').addEventListener('click',()=>{
+    //a cada vez que o usuario clicar no modal a variavel modalQtd será incrementada em +1
+    modalQtd--;
+
+        if(modalQtd<1){
+            modalQtd=1
+        }
+
+    //selecionando o elemento onde a quantidade de pizzas irá aparecer e utilizando-o conforme a variável modalQtd
+    document.querySelector('.pizzaInfo--qt').innerHTML = modalQtd;
+});
